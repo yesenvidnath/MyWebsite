@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Yesen Kandalama</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+.about-terminal-output p { margin-bottom:0.85rem; font-size:0.88rem; line-height:1.85; }
+.info-table { width:100%; border-collapse:collapse; margin-top:1.2rem; }
+.info-table tr { border-bottom:1px solid var(--border); }
+.info-table td { padding:0.65rem 0.4rem; font-size:0.83rem; }
+.info-table td:first-child { color:var(--muted); width:130px; white-space:nowrap; }
+.info-table td:first-child::before { content:'# '; color:var(--amber); }
+.info-table td:last-child { color:var(--text); }
+
+.edu-item { background:var(--bg2); border:1px solid var(--border); border-left:3px solid var(--green); padding:1.2rem 1.4rem; margin-bottom:1rem; transition:all 0.3s; }
+.edu-item:hover { border-left-color:var(--amber); box-shadow:0 0 15px rgba(0,255,136,0.06); }
+.edu-degree { font-family:'VT323',monospace; font-size:1.4rem; color:var(--green); }
+.edu-school { font-size:0.8rem; color:var(--muted); margin:0.15rem 0; }
+.edu-year { font-size:0.72rem; color:var(--amber); letter-spacing:0.1em; }
+
+.philosophy-block { background:var(--bg2); border:1px solid var(--border); border-top:2px solid var(--amber); padding:1.5rem; margin-top:2rem; }
+.ph-label { font-family:'Press Start 2P',monospace; font-size:0.5rem; color:var(--amber); letter-spacing:0.15em; margin-bottom:0.8rem; }
+
+.award-row { display:flex; align-items:flex-start; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid var(--border); }
+.award-icon { color:var(--amber); font-size:1rem; flex-shrink:0; width:1.4rem; text-align:center; margin-top:0.1rem; }
+.award-title { font-size:0.85rem; color:var(--text); }
+.award-sub { font-size:0.72rem; color:var(--muted); margin-top:0.15rem; }
+
+/* ── Slider ── */
+.slider-wrap { margin-top:2rem; background:var(--bg2); border:1px solid var(--border); border-radius:4px; overflow:hidden; }
+.slider-bar { background:#0a1a0f; border-bottom:1px solid var(--border); padding:0.45rem 1rem; display:flex; align-items:center; gap:0.6rem; }
+.slider-bar-title { margin-left:auto; font-size:0.65rem; color:var(--muted); font-family:'Share Tech Mono',monospace; }
+.slider-viewport { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:#050a08; cursor:grab; }
+.slider-viewport:active { cursor:grabbing; }
+.slide { position:absolute; inset:0; opacity:0; transition:opacity 0.7s ease; }
+.slide.active { opacity:1; }
+.slide img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; filter:grayscale(10%) contrast(1.05); }
+/* CRT scanlines on slider */
+.slider-viewport::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,136,0.025) 3px,rgba(0,255,136,0.025) 4px); pointer-events:none; z-index:3; }
+/* Green tint */
+.slider-tint { position:absolute; inset:0; background:rgba(0,255,136,0.04); pointer-events:none; z-index:2; }
+/* Sweep scan */
+.slider-scan { position:absolute; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,rgba(0,255,136,0.55),transparent); box-shadow:0 0 10px rgba(0,255,136,0.5); z-index:4; animation:sliderScan 3.5s ease-in-out infinite; pointer-events:none; }
+@keyframes sliderScan { 0%{top:0%;opacity:0} 5%{opacity:1} 95%{opacity:1} 100%{top:100%;opacity:0} }
+/* Corner brackets */
+.sc { position:absolute; width:18px; height:18px; z-index:5; pointer-events:none; }
+.sc.tl { top:0; left:0; border-top:2px solid var(--green); border-left:2px solid var(--green); }
+.sc.tr { top:0; right:0; border-top:2px solid var(--green); border-right:2px solid var(--green); }
+.sc.bl { bottom:0; left:0; border-bottom:2px solid var(--green); border-left:2px solid var(--green); }
+.sc.br { bottom:0; right:0; border-bottom:2px solid var(--green); border-right:2px solid var(--green); }
+/* HUD labels */
+.shud { position:absolute; font-family:'Share Tech Mono',monospace; font-size:0.58rem; color:var(--green); letter-spacing:0.1em; text-shadow:0 0 6px var(--green); z-index:5; pointer-events:none; background:rgba(2,12,5,0.7); padding:2px 5px; }
+.shud.tl{top:8px;left:8px} .shud.tr{top:8px;right:8px} .shud.bl{bottom:8px;left:8px} .shud.br{bottom:8px;right:8px}
+/* Nav buttons */
+.slider-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(2,12,5,0.75); border:1px solid var(--border); color:var(--green); font-size:0.8rem; width:30px; height:30px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:6; transition:all 0.2s; }
+.slider-btn:hover { background:rgba(0,255,136,0.15); border-color:var(--green); }
+.slider-btn.prev{left:10px} .slider-btn.next{right:10px}
+/* Dots */
+.slider-dots { display:flex; justify-content:center; gap:6px; padding:0.6rem 0; background:var(--bg2); }
+.sdot { width:6px; height:6px; border-radius:50%; background:var(--border); cursor:pointer; transition:all 0.2s; }
+.sdot.active { background:var(--green); box-shadow:0 0 6px var(--green); }
+/* Caption */
+.slider-caption { padding:0.5rem 1rem; font-size:0.7rem; color:var(--muted); letter-spacing:0.08em; border-top:1px solid var(--border); min-height:2rem; display:flex; align-items:center; gap:0.5rem; }
+.slider-caption i { color:var(--green); font-size:0.65rem; }
+
+@media(max-width:768px){ .about-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch">YK.exe</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html" class="active">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="publications.html">PUBLICATIONS</a></li>
+    <li><a href="skills.html">SKILLS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-time" id="nav-clock">--:--:--</div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <h2 class="glow">ABOUT.SYS</h2>
+        <div class="sh-line"></div>
+        <span class="sh-tag">// loaded</span>
+      </div>
+
+      <div class="about-grid">
+
+        <!-- LEFT: Bio + slider -->
+        <div>
+
+          <!-- ── Image Slider ── -->
+          <div class="slider-wrap">
+            <div class="slider-bar">
+
+              <span class="slider-bar-title" id="slider-filename">img/slider/</span>
+            </div>
+            <div class="slider-viewport" id="slider-viewport">
+              <div class="slider-tint"></div>
+              <div class="slider-scan"></div>
+              <div class="sc tl"></div><div class="sc tr"></div>
+              <div class="sc bl"></div><div class="sc br"></div>
+              <span class="shud tl">YK-CAM</span>
+              <span class="shud tr" id="shud-index">01 / 01</span>
+              <span class="shud bl" id="shud-year">2025</span>
+              <span class="shud br">GALLERY</span>
+              <button class="slider-btn prev" onclick="sliderMove(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="slider-btn next" onclick="sliderMove(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="slider-dots" id="slider-dots"></div>
+            <div class="slider-caption">
+              <i class="fa-solid fa-image"></i>
+              <span id="slider-caption-text">Gallery</span>
+            </div>
+          </div>
+          <br><br>
+
+          <div class="terminal">
+            <div class="terminal-bar">
+
+              <span class="t-title">about.exe</span>
+            </div>
+            <div class="terminal-body">
+              <div class="prompt" style="margin-bottom:0.8rem">cat bio.txt</div>
+              <div class="about-terminal-output">
+                <p>Yesen is a Software Engineer and Lecturer with a strong foundation in web development and software engineering education. His professional journey has been shaped by hands-on industry experience, continuous self-driven learning, and a deep interest in applying technology to solve real-world problems.</p>
+                <p>His path into software engineering was non-linear — which played a significant role in developing resilience, adaptability, and practical thinking. These experiences strongly influence his approach to both development and teaching, where equal importance is placed on technical competence, logical reasoning, and professional discipline.</p>
+                <p>His technical focus lies primarily in backend development, system architecture, database design, and building scalable, maintainable solutions — while continuously exploring emerging technologies including Quantum Computing.</p>
+                <p>As a lecturer, Yesen's teaching philosophy centres on helping students move beyond theoretical knowledge to develop genuine problem-solving skills and an engineering mindset that prepares them for real-world challenges.</p>
+                <p>Driven by curiosity, resilience, and a commitment to continuous growth — his long-term vision is to support the development of capable, ethical, and industry-ready software engineers.</p>
+              </div>
+              <div class="prompt" style="margin-top:1rem;margin-bottom:0.5rem">cat info.json</div>
+              <table class="info-table">
+                <tr><td>Name</td><td>K.K. Yesen Vidnath</td></tr>
+                <tr><td>Role</td><td>Software Engineer &amp; Lecturer</td></tr>
+                <tr><td>Location</td><td>Gampaha, Sri Lanka</td></tr>
+                <tr><td>Email</td><td><a href="mailto:ykandalama@gmail.com" style="color:var(--green)">ykandalama@gmail.com</a></td></tr>
+                <tr><td>Phone</td><td>+94-704605516</td></tr>
+                <tr><td>LinkedIn</td><td><a href="https://linkedin.com/in/yesenkandalama" target="_blank" style="color:var(--green)">yesenkandalama</a></td></tr>
+                <tr><td>GitHub</td><td><a href="https://github.com/yesenvidnath" target="_blank" style="color:var(--green)">yesenvidnath</a></td></tr>
+                <tr><td>Status</td><td><span style="color:var(--green)"><i class="fa-solid fa-circle" style="font-size:0.45rem;vertical-align:middle;margin-right:0.3rem"></i>Open to opportunities</span></td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Teaching philosophy -->
+          <div class="philosophy-block">
+            <div class="ph-label">TEACHING PHILOSOPHY</div>
+            <p style="font-size:0.87rem;line-height:1.8;color:var(--text);opacity:0.85">
+              "Technical competence alone is not enough. I aim to develop engineers who think critically, communicate clearly, and solve problems they've never seen before. The classroom is a laboratory — not a lecture hall."
+            </p>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: Education + Awards -->
+        <div>
+
+          <div class="section-heading" style="margin-bottom:1.5rem">
+            <h2 style="font-size:1.6rem;color:var(--amber);text-shadow:0 0 10px rgba(255,179,0,0.3)">EDUCATION</h2>
+            <div class="sh-line"></div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-degree">B.Eng (Hons) Software Engineering</div>
+            <div class="edu-school"><i class="fa-solid fa-building-columns" style="margin-right:0.3rem"></i>London Metropolitan University</div>
+            <div class="edu-year">2024 — 2025</div>
+            <span class="tag" style="border-color:var(--amber);color:var(--amber);margin-top:0.4rem;display:inline-block">FIRST CLASS HONOURS</span>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-degree">HND Computing Software Engineering</div>
+            <div class="edu-school"><i class="fa-solid fa-building-columns" style="margin-right:0.3rem"></i>ESOFT Metro Campus</div>
+            <div class="edu-year">2022 — 2024</div>
+            <span class="tag" style="margin-top:0.4rem;display:inline-block">MERIT</span>
+          </div>
+
+          <div class="edu-item" style="border-left-color:var(--amber)">
+            <div class="edu-degree">Certificate in Quantum Computing</div>
+            <div class="edu-school"><i class="fa-solid fa-building-columns" style="margin-right:0.3rem"></i>University of Colombo, Dept. of Mathematics</div>
+            <div class="edu-year">2026 — Ongoing</div>
+            <span class="tag" style="border-color:var(--amber);color:var(--amber);margin-top:0.4rem;display:inline-block">IN PROGRESS</span>
+          </div>
+
+          <div class="section-heading" style="margin-top:2.5rem;margin-bottom:1.5rem">
+            <h2 style="font-size:1.6rem;color:var(--amber);text-shadow:0 0 10px rgba(255,179,0,0.3)">AWARDS &amp; CERTS</h2>
+            <div class="sh-line"></div>
+          </div>
+
+          <div class="award-row">
+            <div class="award-icon"><i class="fa-solid fa-trophy"></i></div>
+            <div>
+              <div class="award-title">IT Certified Master — Java, React, MongoDB</div>
+              <div class="award-sub">Institute of Computer Engineering Technology &middot; 2025, Ongoing</div>
+            </div>
+          </div>
+          <div class="award-row">
+            <div class="award-icon"><i class="fa-solid fa-atom"></i></div>
+            <div>
+              <div class="award-title">Quantum Computing &amp; Mechanics (Q#)</div>
+              <div class="award-sub">Microsoft Learning Resources &amp; MIT Lectures &middot; 2025</div>
+            </div>
+          </div>
+          <div class="award-row">
+            <div class="award-icon"><i class="fa-brands fa-google"></i></div>
+            <div>
+              <div class="award-title">Google Data Analytics Certificate</div>
+              <div class="award-sub">Coursera &middot; 2024</div>
+            </div>
+          </div>
+          <div class="award-row">
+            <div class="award-icon"><i class="fa-solid fa-microphone"></i></div>
+            <div>
+              <div class="award-title">TEDx Youth Speaker</div>
+              <div class="award-sub">TEDx Youth Kandy 2022 &middot; "Personal Growth &amp; Self-Improvement" &middot; 200+ attendees</div>
+            </div>
+          </div>
+          <div class="award-row" style="border-bottom:none">
+            <div class="award-icon"><i class="fa-solid fa-comments"></i></div>
+            <div>
+              <div class="award-title">Toastmasters — 30+ Prepared Speeches</div>
+              <div class="award-sub">Syane Toastmasters Club &middot; Leadership &amp; Public Speaking</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p style="margin-bottom:0.4rem"><span style="color:var(--green)">YESEN KANDALAMA</span> &nbsp;&middot;&nbsp; Software Engineer &amp; Lecturer</p>
+    <p>
+      <i class="fa-solid fa-phone" style="margin-right:0.3rem"></i>+94-704605516 &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-envelope" style="margin-right:0.3rem"></i>ykandalama@gmail.com &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-location-dot" style="margin-right:0.3rem"></i>Gampaha, Sri Lanka
+    </p>
+    <p style="margin-top:0.8rem;font-size:0.65rem"><i class="fa-solid fa-microchip" style="margin-right:0.3rem"></i>UPTIME: <span id="uptime">00:00:00</span> &nbsp;&middot;&nbsp; &copy; 2025 Yesen Kandalama</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+// ── Slider ──────────────────────────────────────
+// Add/remove entries here to match your actual files in img/slider/
+const SLIDES = [
+  { src:'img/slider/1.webp',  caption:'Yesen Kandalama' },
+  { src:'img/slider/2.webp',  caption:'Yesen Kandalama' },
+  { src:'img/slider/3.webp',  caption:'Yesen Kandalama' },
+  { src:'img/slider/4.webp',  caption:'Yesen Kandalama' },
+  { src:'img/slider/5.webp',  caption:'Yesen Kandalama' },
+];
+
+let cur = 0, timer = null;
+
+function buildSlider() {
+  const vp   = document.getElementById('slider-viewport');
+  const dots = document.getElementById('slider-dots');
+  const tint = vp.querySelector('.slider-tint');
+
+  SLIDES.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'slide' + (i === 0 ? ' active' : '');
+    const img = document.createElement('img');
+    img.src = s.src; img.alt = s.caption; img.loading = 'lazy';
+    div.appendChild(img);
+    vp.insertBefore(div, tint);
+
+    const dot = document.createElement('div');
+    dot.className = 'sdot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dots.appendChild(dot);
+  });
+
+  updateHUD();
+  autoPlay();
+}
+
+function goTo(n) {
+  document.querySelectorAll('.slide')[cur].classList.remove('active');
+  document.querySelectorAll('.sdot')[cur].classList.remove('active');
+  cur = (n + SLIDES.length) % SLIDES.length;
+  document.querySelectorAll('.slide')[cur].classList.add('active');
+  document.querySelectorAll('.sdot')[cur].classList.add('active');
+  updateHUD();
+  clearInterval(timer); autoPlay();
+}
+
+function sliderMove(d) { goTo(cur + d); }
+
+function updateHUD() {
+  const pad = n => String(n + 1).padStart(2, '0');
+  document.getElementById('shud-index').textContent        = pad(cur) + ' / ' + pad(SLIDES.length - 1);
+  document.getElementById('slider-filename').textContent   = SLIDES[cur].src;
+  document.getElementById('slider-caption-text').textContent = SLIDES[cur].caption;
+}
+
+function autoPlay() { timer = setInterval(() => sliderMove(1), 4000); }
+
+// Keyboard + swipe
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  sliderMove(-1);
+  if (e.key === 'ArrowRight') sliderMove(1);
+});
+let tx = 0;
+const vp = document.getElementById('slider-viewport');
+vp.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+vp.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 40) sliderMove(dx < 0 ? 1 : -1);
+});
+
+buildSlider();
+</script>
+</body>
+</html>

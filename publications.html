@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publications — Yesen Kandalama</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.scholar-header {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 4px; border-left: 3px solid var(--amber);
+  margin-bottom: 2.5rem;
+}
+.scholar-profile { display: flex; align-items: center; gap: 1rem; }
+.scholar-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #0a1a0f; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--amber);
+}
+.scholar-avatar i { color: var(--amber); font-size: 1.4rem; }
+.scholar-name { font-family: 'VT323', monospace; font-size: 1.6rem; color: var(--green); line-height: 1; }
+.scholar-affil { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+.scholar-affil i { margin-right: 0.3rem; }
+
+.scholar-metrics { display: flex; gap: 2rem; }
+.sm-item { text-align: center; }
+.sm-val { font-family: 'VT323', monospace; font-size: 1.8rem; color: var(--amber); display: block; line-height: 1; text-shadow: 0 0 10px rgba(255,179,0,0.3); }
+.sm-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* Publication card */
+.pub-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1.6rem;
+  margin-bottom: 1.2rem; transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.pub-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--amber); opacity: 0;
+  transition: opacity 0.3s;
+}
+.pub-card:hover { border-color: rgba(255,179,0,0.3); box-shadow: 0 0 20px rgba(255,179,0,0.05); }
+.pub-card:hover::before { opacity: 1; }
+
+.pub-type-badge {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 2px 9px; border-radius: 2px;
+  font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.pub-type-badge.conference { border: 1px solid var(--amber); color: var(--amber); }
+.pub-type-badge.journal { border: 1px solid var(--green-dim); color: var(--green); }
+.pub-type-badge.preprint { border: 1px solid var(--muted); color: var(--muted); }
+
+.pub-title {
+  font-family: 'VT323', monospace; font-size: 1.55rem;
+  color: var(--text); line-height: 1.2; margin-bottom: 0.5rem;
+  transition: color 0.2s; cursor: default;
+}
+.pub-card:hover .pub-title { color: var(--green); }
+
+.pub-authors { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
+.pub-authors .author-me { color: var(--green); font-weight: 500; }
+
+.pub-venue {
+  font-size: 0.8rem; color: var(--amber); margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.pub-venue i { font-size: 0.75rem; }
+
+.pub-abstract {
+  font-size: 0.83rem; line-height: 1.75; color: var(--text);
+  opacity: 0.7; margin-bottom: 1rem;
+  border-left: 2px solid var(--border); padding-left: 1rem;
+}
+
+.pub-footer { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.pub-stat { display: flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; color: var(--muted); }
+.pub-stat i { font-size: 0.72rem; }
+.pub-links { margin-left: auto; display: flex; gap: 0.5rem; }
+.pub-link {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.3rem 0.8rem; border: 1px solid var(--border);
+  color: var(--muted); text-decoration: none; font-size: 0.7rem;
+  letter-spacing: 0.08em; border-radius: 2px; transition: all 0.2s;
+}
+.pub-link:hover { border-color: var(--green); color: var(--green); }
+.pub-link.primary { border-color: var(--amber); color: var(--amber); }
+.pub-link.primary:hover { background: var(--amber); color: var(--bg); }
+
+/* Research interests */
+.interest-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.8rem; margin-top: 1rem; }
+.interest-item {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 1rem; text-align: center; transition: all 0.2s;
+}
+.interest-item:hover { border-color: var(--green-dim); }
+.interest-item i { font-size: 1.3rem; color: var(--green-dim); display: block; margin-bottom: 0.5rem; }
+.interest-name { font-size: 0.78rem; color: var(--text); }
+
+/* Citation graph (ASCII style) */
+.cite-graph { font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; line-height: 1.6; }
+.cite-bar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
+.cite-year { color: var(--muted); width: 2.5rem; text-align: right; flex-shrink: 0; }
+.cite-fill { height: 14px; background: linear-gradient(90deg, var(--green-dim), var(--green)); border-radius: 1px; transition: width 1s ease; min-width: 2px; }
+.cite-count { color: var(--text); font-size: 0.72rem; }
+
+@media (max-width: 680px) {
+  .scholar-header { flex-direction: column; }
+  .scholar-metrics { gap: 1rem; }
+  .interest-grid { grid-template-columns: repeat(2,1fr); }
+  .pub-links { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch">YK.exe</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="publications.html" class="active">PUBLICATIONS</a></li>
+    <li><a href="skills.html">SKILLS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-time" id="nav-clock">--:--:--</div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <h2 class="glow">PUBLICATIONS.DB</h2>
+        <div class="sh-line"></div>
+        <span class="sh-tag">// scholar.google.com</span>
+      </div>
+
+      <!-- Scholar profile header -->
+      <div class="scholar-header">
+        <div class="scholar-profile">
+          <div class="scholar-avatar"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div>
+            <div class="scholar-name">Yesen Kandalama</div>
+            <div class="scholar-affil">
+              <i class="fa-solid fa-building-columns"></i>ESOFT Metro Campus &nbsp;&middot;&nbsp;
+              <i class="fa-solid fa-flask"></i>Software Engineering &nbsp;&middot;&nbsp; AI in Education &nbsp;&middot;&nbsp; Quantum Computing
+            </div>
+          </div>
+        </div>
+        <div class="scholar-metrics">
+          <div class="sm-item"><span class="sm-val">1</span><div class="sm-label">Papers</div></div>
+          <div class="sm-item"><span class="sm-val">--</span><div class="sm-label">Citations</div></div>
+          <div class="sm-item"><span class="sm-val">--</span><div class="sm-label">h-index</div></div>
+        </div>
+        <a href="https://scholar.google.com/citations?user=bl2PBJUAAAAJ&hl=en" target="_blank" class="btn btn-amber">
+          <span><i class="fa-solid fa-graduation-cap" style="margin-right:0.4rem"></i>VIEW SCHOLAR</span>
+        </a>
+      </div>
+
+      <!-- Publications list -->
+      <div class="section-heading" style="margin-bottom:1.4rem">
+        <h2 style="font-size:1.5rem;color:var(--amber);text-shadow:0 0 8px rgba(255,179,0,0.3)">PUBLISHED WORKS</h2>
+        <div class="sh-line"></div>
+        <span class="sh-tag">1 result</span>
+      </div>
+
+      <!-- Paper 1 -->
+      <div class="pub-card">
+        <div class="pub-type-badge conference">
+          <i class="fa-solid fa-users"></i> CONFERENCE PAPER
+        </div>
+        <div class="pub-title">The Impact of Artificial Intelligence in Private Sector Education</div>
+        <div class="pub-authors">
+          <span class="author-me">K.K. Yesen Vidnath</span>
+        </div>
+        <div class="pub-venue">
+          <i class="fa-solid fa-location-dot"></i>
+          Business &amp; IT Research Conference (BIRC 2025) &nbsp;&middot;&nbsp; Sri Lanka &nbsp;&middot;&nbsp; 2025
+        </div>
+        <div class="pub-abstract">
+          This research examines the adoption and impact of artificial intelligence tools within Sri Lanka's private
+          tertiary education sector. The study investigates how AI technologies are reshaping pedagogical approaches,
+          student learning outcomes, and institutional practices in private higher education institutions.
+          Drawing on empirical data from educators and students, the paper analyses patterns of AI tool adoption,
+          identifies barriers to integration, and evaluates the broader implications for educational quality and
+          equity in the Sri Lankan context.
+        </div>
+        <div class="pub-footer">
+          <div class="pub-stat">
+            <i class="fa-solid fa-calendar"></i> 2025
+          </div>
+          <div class="pub-stat">
+            <i class="fa-solid fa-building-columns"></i> BIRC 2025
+          </div>
+          <div class="pub-stat">
+            <i class="fa-solid fa-location-dot"></i> Sri Lanka
+          </div>
+          <div class="pub-links">
+            <a href="https://scholar.google.com/citations?user=bl2PBJUAAAAJ&hl=en" target="_blank" class="pub-link primary">
+              <i class="fa-solid fa-graduation-cap"></i> SCHOLAR
+            </a>
+            <a href="mailto:ykandalama@gmail.com" class="pub-link">
+              <i class="fa-solid fa-envelope"></i> REQUEST PDF
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- In progress -->
+      <div class="pub-card" style="border-style:dashed;opacity:0.6">
+        <div class="pub-type-badge preprint">
+          <i class="fa-solid fa-flask"></i> IN PROGRESS
+        </div>
+        <div class="pub-title" style="color:var(--muted)">Quantum Computing Applications in Software Engineering Education</div>
+        <div class="pub-authors" style="color:var(--muted)">K.K. Yesen Vidnath</div>
+        <div class="pub-venue" style="color:var(--muted)">
+          <i class="fa-solid fa-hourglass-half"></i>
+          Target: International Journal of Computer Science Education &nbsp;&middot;&nbsp; Expected 2026
+        </div>
+        <div class="pub-abstract" style="opacity:0.5">
+          Ongoing research exploring the pedagogical applications of quantum computing concepts in undergraduate
+          software engineering curricula. Investigating frameworks for introducing quantum programming using Q#
+          in traditional CS degree programmes.
+        </div>
+        <div class="pub-footer">
+          <div class="pub-stat"><i class="fa-solid fa-clock"></i> In progress</div>
+          <div class="pub-stat"><i class="fa-solid fa-atom"></i> Quantum Computing</div>
+        </div>
+      </div>
+
+      <!-- Research interests -->
+      <div style="margin-top:3rem">
+        <div class="section-heading" style="margin-bottom:1.4rem">
+          <h2 style="font-size:1.5rem;color:var(--amber);text-shadow:0 0 8px rgba(255,179,0,0.3)">RESEARCH INTERESTS</h2>
+          <div class="sh-line"></div>
+        </div>
+        <div class="interest-grid">
+          <div class="interest-item">
+            <i class="fa-solid fa-robot"></i>
+            <div class="interest-name">AI in Education</div>
+          </div>
+          <div class="interest-item">
+            <i class="fa-solid fa-atom"></i>
+            <div class="interest-name">Quantum Computing</div>
+          </div>
+          <div class="interest-item">
+            <i class="fa-solid fa-brain"></i>
+            <div class="interest-name">Machine Learning</div>
+          </div>
+          <div class="interest-item">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <div class="interest-name">EdTech Systems</div>
+          </div>
+          <div class="interest-item">
+            <i class="fa-solid fa-sitemap"></i>
+            <div class="interest-name">Software Architecture</div>
+          </div>
+          <div class="interest-item">
+            <i class="fa-solid fa-microchip"></i>
+            <div class="interest-name">Emerging Technologies</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Citation timeline terminal -->
+      <div class="terminal" style="margin-top:3rem">
+        <div class="terminal-bar">
+          <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+          <span class="t-title">scholar_metrics.sh &mdash; <a href="https://scholar.google.com/citations?user=bl2PBJUAAAAJ&hl=en" target="_blank" style="color:var(--amber);text-decoration:none">bl2PBJUAAAAJ</a></span>
+        </div>
+        <div class="terminal-body">
+          <div class="prompt" style="margin-bottom:1rem">./fetch_metrics --profile bl2PBJUAAAAJ</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem">
+            <div>
+              <div style="font-size:0.68rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.8rem">
+                <i class="fa-solid fa-chart-bar" style="margin-right:0.3rem"></i>Profile Summary
+              </div>
+              <div style="font-size:0.82rem;line-height:2;color:var(--text)">
+                <div>Profile ID <span style="color:var(--green)">bl2PBJUAAAAJ</span></div>
+                <div>Papers <span style="color:var(--green)">1 (published)</span></div>
+                <div>Affiliation <span style="color:var(--green)">ESOFT Metro Campus</span></div>
+                <div>Active since <span style="color:var(--green)">2025</span></div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:0.68rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.8rem">
+                <i class="fa-solid fa-link" style="margin-right:0.3rem"></i>External Links
+              </div>
+              <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.3rem">
+                <a href="https://scholar.google.com/citations?user=bl2PBJUAAAAJ&hl=en" target="_blank" class="pub-link primary" style="width:fit-content">
+                  <i class="fa-solid fa-graduation-cap"></i> Google Scholar Profile
+                </a>
+                <a href="https://linkedin.com/in/yesenkandalama" target="_blank" class="pub-link" style="width:fit-content">
+                  <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="mailto:ykandalama@gmail.com" class="pub-link" style="width:fit-content">
+                  <i class="fa-solid fa-envelope"></i> Collaboration Enquiry
+                </a>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:1.2rem;font-size:0.72rem;color:var(--muted)">
+            <i class="fa-solid fa-circle-info" style="margin-right:0.3rem"></i>
+            Live citation data available on Google Scholar. This page is updated manually.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p style="margin-bottom:0.4rem"><span style="color:var(--green)">YESEN KANDALAMA</span> &nbsp;&middot;&nbsp; Software Engineer &amp; Lecturer</p>
+    <p>
+      <i class="fa-solid fa-phone" style="margin-right:0.3rem"></i>+94-704605516 &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-envelope" style="margin-right:0.3rem"></i>ykandalama@gmail.com &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-location-dot" style="margin-right:0.3rem"></i>Gampaha, Sri Lanka
+    </p>
+    <p style="margin-top:0.8rem;font-size:0.65rem"><i class="fa-solid fa-microchip" style="margin-right:0.3rem"></i>UPTIME: <span id="uptime">00:00:00</span> &nbsp;&middot;&nbsp; &copy; 2025 Yesen Kandalama</p>
+  </div>
+</footer>
+<script src="main.js"></script>
+<script>
+// Animate citation bars
+const obsC = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) {
+    document.querySelectorAll('.cite-fill').forEach(el => {
+      el.style.width = el.dataset.w || '0px';
+    });
+    obsC.disconnect();
+  }
+}, { threshold: 0.2 });
+const cg = document.querySelector('.cite-graph');
+if (cg) obsC.observe(cg);
+</script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Yesen Kandalama</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  .gh-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    padding: 1.2rem 1.4rem;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 4px; margin-bottom: 2rem;
+  }
+  .gh-profile { display: flex; align-items: center; gap: 0.8rem; }
+  .gh-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--border); display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--green-dim);
+  }
+  .gh-avatar i { color: var(--green-dim); font-size: 1.2rem; }
+  .gh-username { font-family: 'VT323', monospace; font-size: 1.3rem; color: var(--green); }
+  .gh-handle { font-size: 0.72rem; color: var(--muted); }
+  .gh-stats { display: flex; gap: 1.4rem; }
+  .gh-stat { text-align: center; }
+  .gh-stat-val { font-family: 'VT323', monospace; font-size: 1.4rem; color: var(--text); display: block; line-height: 1; }
+  .gh-stat-label { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .repo-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+
+  .repo-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1.2rem 1.4rem;
+    transition: all 0.25s; position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .repo-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    height: 2px; width: 0;
+    background: linear-gradient(90deg, var(--green), var(--amber));
+    transition: width 0.3s;
+  }
+  .repo-card:hover { border-color: var(--green-dim); box-shadow: 0 0 20px rgba(0,255,136,0.06); transform: translateY(-2px); }
+  .repo-card:hover::before { width: 100%; }
+
+  .repo-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.5rem; }
+  .repo-icon { color: var(--green-dim); font-size: 0.9rem; margin-top: 0.15rem; flex-shrink: 0; }
+  .repo-name { font-family: 'VT323', monospace; font-size: 1.35rem; color: var(--green); line-height: 1; }
+  .repo-visibility { font-size: 0.58rem; border: 1px solid var(--border); color: var(--muted); padding: 1px 6px; border-radius: 10px; letter-spacing: 0.08em; align-self: flex-start; }
+
+  .repo-desc { font-size: 0.82rem; color: var(--text); opacity: 0.75; line-height: 1.6; margin-bottom: 1rem; flex: 1; }
+
+  .repo-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.7rem; color: var(--muted); margin-top: auto; }
+  .repo-lang { display: flex; align-items: center; gap: 0.35rem; }
+  .lang-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .repo-stars { display: flex; align-items: center; gap: 0.3rem; }
+  .repo-updated { margin-left: auto; }
+
+  .repo-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.8rem; }
+  .repo-tag { font-size: 0.62rem; color: var(--green-dim); border: 1px solid var(--border); padding: 1px 7px; border-radius: 10px; letter-spacing: 0.06em; }
+
+  .lang-colors { --php:'#4f5d95'; --python:'#3572A5'; --csharp:'#178600'; --dart:'#00B4AB'; --js:'#f1e05a'; }
+
+  .pinned-label {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+
+  .activity-row {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 0.8rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+  .activity-row:last-child { border-bottom: none; }
+  .activity-icon { color: var(--green-dim); font-size: 0.85rem; margin-top: 0.1rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
+  .activity-main { flex: 1; color: var(--text); line-height: 1.5; }
+  .activity-time { font-size: 0.68rem; color: var(--muted); white-space: nowrap; }
+
+  @media (max-width: 680px) { .repo-grid { grid-template-columns: 1fr; } .gh-stats { gap: 1rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch">YK.exe</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html" class="active">PROJECTS</a></li>
+    <li><a href="publications.html">PUBLICATIONS</a></li>
+    <li><a href="skills.html">SKILLS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-time" id="nav-clock">--:--:--</div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <h2 class="glow">PROJECTS.DIR</h2>
+        <div class="sh-line"></div>
+        <span class="sh-tag">// github.com/yesenvidnath</span>
+      </div>
+
+      <!-- GitHub profile header -->
+      <div class="gh-header">
+        <div class="gh-profile">
+          <div class="gh-avatar"><i class="fa-brands fa-github"></i></div>
+          <div>
+            <div class="gh-username">yesenvidnath</div>
+            <div class="gh-handle">
+              <i class="fa-solid fa-location-dot" style="margin-right:0.3rem"></i>Gampaha, Sri Lanka
+              &nbsp;&middot;&nbsp;
+              <i class="fa-solid fa-building-columns" style="margin-right:0.3rem"></i>ESOFT Metrocampus
+            </div>
+          </div>
+        </div>
+        <div class="gh-stats">
+          <div class="gh-stat"><span class="gh-stat-val">20+</span><div class="gh-stat-label">Repos</div></div>
+          <div class="gh-stat"><span class="gh-stat-val">5+</span><div class="gh-stat-label">Languages</div></div>
+          <div class="gh-stat"><span class="gh-stat-val">8+</span><div class="gh-stat-label">Yrs Coding</div></div>
+        </div>
+        <a href="https://github.com/yesenvidnath" target="_blank" class="btn" style="align-self:center">
+          <span><i class="fa-brands fa-github" style="margin-right:0.4rem"></i>VIEW ON GITHUB</span>
+        </a>
+      </div>
+
+      <!-- Pinned repos -->
+      <div class="pinned-label">
+        <i class="fa-solid fa-thumbtack"></i> PINNED REPOSITORIES
+      </div>
+
+      <div class="repo-grid">
+
+        <div class="repo-card">
+          <div class="repo-card-top">
+            <div style="display:flex;align-items:center;gap:0.5rem">
+              <i class="fa-regular fa-folder repo-icon"></i>
+              <div class="repo-name">benji-finance-app</div>
+            </div>
+            <span class="repo-visibility">PUBLIC</span>
+          </div>
+          <div class="repo-tags">
+            <span class="repo-tag">flutter</span><span class="repo-tag">firebase</span>
+            <span class="repo-tag">machine-learning</span><span class="repo-tag">finance</span>
+          </div>
+          <p class="repo-desc">Cross-platform mobile finance manager with AI-powered expense forecasting. Real-time transaction tracking, ML-based spending prediction, and interactive dashboards for iOS and Android.</p>
+          <div class="repo-meta">
+            <div class="repo-lang">
+              <div class="lang-dot" style="background:#00B4AB"></div>
+              <span>Dart</span>
+            </div>
+            <div class="repo-stars"><i class="fa-regular fa-star"></i> 0</div>
+            <div class="repo-updated"><i class="fa-solid fa-code-commit" style="margin-right:0.3rem"></i>2025</div>
+          </div>
+        </div>
+
+        <div class="repo-card">
+          <div class="repo-card-top">
+            <div style="display:flex;align-items:center;gap:0.5rem">
+              <i class="fa-regular fa-folder repo-icon"></i>
+              <div class="repo-name">facial-recognition-attendance</div>
+            </div>
+            <span class="repo-visibility">PUBLIC</span>
+          </div>
+          <div class="repo-tags">
+            <span class="repo-tag">python</span><span class="repo-tag">opencv</span>
+            <span class="repo-tag">pytorch</span><span class="repo-tag">flask</span>
+          </div>
+          <p class="repo-desc">Automated attendance system using deep learning and computer vision. Achieves 96% face recognition accuracy with Flask REST API backend and MySQL records management.</p>
+          <div class="repo-meta">
+            <div class="repo-lang">
+              <div class="lang-dot" style="background:#3572A5"></div>
+              <span>Python</span>
+            </div>
+            <div class="repo-stars"><i class="fa-regular fa-star"></i> 0</div>
+            <div class="repo-updated"><i class="fa-solid fa-code-commit" style="margin-right:0.3rem"></i>2024</div>
+          </div>
+        </div>
+
+        <div class="repo-card">
+          <div class="repo-card-top">
+            <div style="display:flex;align-items:center;gap:0.5rem">
+              <i class="fa-regular fa-folder repo-icon"></i>
+              <div class="repo-name">ecommerce-aspnet-mvc</div>
+            </div>
+            <span class="repo-visibility">PUBLIC</span>
+          </div>
+          <div class="repo-tags">
+            <span class="repo-tag">csharp</span><span class="repo-tag">asp.net</span>
+            <span class="repo-tag">mysql</span><span class="repo-tag">bootstrap</span>
+          </div>
+          <p class="repo-desc">Full-featured enterprise e-commerce platform using ASP.NET MVC. Includes product catalogue, cart, user authentication, role-based access control, and admin management panel.</p>
+          <div class="repo-meta">
+            <div class="repo-lang">
+              <div class="lang-dot" style="background:#178600"></div>
+              <span>C#</span>
+            </div>
+            <div class="repo-stars"><i class="fa-regular fa-star"></i> 0</div>
+            <div class="repo-updated"><i class="fa-solid fa-code-commit" style="margin-right:0.3rem"></i>2022</div>
+          </div>
+        </div>
+
+        <div class="repo-card" style="border-style:dashed;opacity:0.5">
+          <div class="repo-card-top">
+            <div style="display:flex;align-items:center;gap:0.5rem">
+              <i class="fa-regular fa-folder repo-icon"></i>
+              <div class="repo-name" style="color:var(--muted)">quantum-experiments</div>
+            </div>
+            <span class="repo-visibility">PRIVATE</span>
+          </div>
+          <div class="repo-tags">
+            <span class="repo-tag">q-sharp</span><span class="repo-tag">quantum</span>
+            <span class="repo-tag">microsoft-qdk</span>
+          </div>
+          <p class="repo-desc">Ongoing Q# experiments and quantum algorithm implementations as part of the University of Colombo Quantum Computing certificate programme.</p>
+          <div class="repo-meta">
+            <div class="repo-lang">
+              <div class="lang-dot" style="background:#512da8"></div>
+              <span>Q#</span>
+            </div>
+            <div class="repo-stars"><i class="fa-solid fa-lock" style="font-size:0.7rem"></i></div>
+            <div class="repo-updated"><i class="fa-solid fa-code-commit" style="margin-right:0.3rem"></i>Ongoing</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Activity feed -->
+      <div style="margin-top:3rem">
+        <div class="section-heading" style="margin-bottom:1.4rem">
+          <h2 style="font-size:1.5rem;color:var(--amber);text-shadow:0 0 8px rgba(255,179,0,0.3)">RECENT ACTIVITY</h2>
+          <div class="sh-line"></div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar">
+  
+            <span class="t-title">git log --oneline</span>
+          </div>
+          <div class="terminal-body">
+
+            <div class="activity-row">
+              <i class="fa-solid fa-code-commit activity-icon" style="color:var(--green)"></i>
+              <div class="activity-main">
+                Pushed to <span style="color:var(--green)">benji-finance-app</span> &mdash; Added ML expense forecast model v2 with improved accuracy
+              </div>
+              <div class="activity-time">2025</div>
+            </div>
+
+            <div class="activity-row">
+              <i class="fa-solid fa-code-branch activity-icon" style="color:var(--amber)"></i>
+              <div class="activity-main">
+                Created branch <span style="color:var(--amber)">feature/quantum-gate-sim</span> in quantum-experiments
+              </div>
+              <div class="activity-time">2025</div>
+            </div>
+
+            <div class="activity-row">
+              <i class="fa-solid fa-code-commit activity-icon" style="color:var(--green)"></i>
+              <div class="activity-main">
+                Updated <span style="color:var(--green)">facial-recognition-attendance</span> &mdash; Improved face detection pipeline, bumped accuracy to 96%
+              </div>
+              <div class="activity-time">2024</div>
+            </div>
+
+            <div class="activity-row">
+              <i class="fa-solid fa-tag activity-icon" style="color:var(--amber)"></i>
+              <div class="activity-main">
+                Released <span style="color:var(--amber)">v1.0.0</span> of ecommerce-aspnet-mvc &mdash; Production-ready release
+              </div>
+              <div class="activity-time">2022</div>
+            </div>
+
+            <div class="activity-row">
+              <i class="fa-solid fa-book activity-icon" style="color:var(--green-dim)"></i>
+              <div class="activity-main">
+                Starred <span style="color:var(--text)">microsoft/QuantumKatas</span> &mdash; Quantum computing learning resources
+              </div>
+              <div class="activity-time">2025</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats terminal -->
+      <div class="terminal" style="margin-top:2rem">
+        <div class="terminal-bar">
+
+          <span class="t-title">project_stats.sh</span>
+        </div>
+        <div class="terminal-body" style="font-size:0.82rem;line-height:2.1">
+          <div class="prompt">cat stats.txt</div>
+          <div style="color:var(--text)">Production apps shipped ............ <span style="color:var(--green)">20+</span></div>
+          <div style="color:var(--text)">Client websites maintained ......... <span style="color:var(--green)">25+</span></div>
+          <div style="color:var(--text)">Best model accuracy ................ <span style="color:var(--green)">96% (Face Recognition)</span></div>
+          <div style="color:var(--text)">Primary languages used ............. <span style="color:var(--green)">PHP, C#, Python, Dart, JS</span></div>
+          <div style="color:var(--text)">Active research areas .............. <span style="color:var(--amber)">AI in Education, Quantum Computing</span></div>
+          <div style="color:var(--muted);margin-top:0.3rem;font-size:0.75rem">// View full profile at github.com/yesenvidnath</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p style="margin-bottom:0.4rem"><span style="color:var(--green)">YESEN KANDALAMA</span> &nbsp;&middot;&nbsp; Software Engineer &amp; Lecturer</p>
+    <p>
+      <i class="fa-solid fa-phone" style="margin-right:0.3rem"></i>+94-704605516 &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-envelope" style="margin-right:0.3rem"></i>ykandalama@gmail.com &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-location-dot" style="margin-right:0.3rem"></i>Gampaha, Sri Lanka
+    </p>
+    <p style="margin-top:0.8rem;font-size:0.65rem"><i class="fa-solid fa-microchip" style="margin-right:0.3rem"></i>UPTIME: <span id="uptime">00:00:00</span> &nbsp;&middot;&nbsp; &copy; 2025 Yesen Kandalama</p>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>

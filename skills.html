@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills — Yesen Kandalama</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.skills-section { }
+.skills-cat { margin-bottom:3rem; }
+.skills-cat-title {
+  font-family:'VT323',monospace; font-size:1.4rem;
+  color:var(--amber); text-shadow:0 0 8px rgba(255,179,0,0.3);
+  margin-bottom:1.4rem;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.skills-cat-title::before { content:'['; color:var(--muted); }
+.skills-cat-title::after  { content:']'; color:var(--muted); }
+
+.skill-row {
+  display:grid; grid-template-columns:170px 1fr 42px;
+  align-items:center; gap:1rem; margin-bottom:1rem;
+}
+.skill-name { font-size:0.85rem; color:var(--text); }
+.skill-track { height:5px; background:var(--border); border-radius:2px; overflow:hidden; }
+.skill-fill {
+  height:100%; border-radius:2px;
+  background:linear-gradient(90deg,var(--green-dim),var(--green));
+  box-shadow:0 0 8px var(--green-glow);
+  width:0; transition:width 1.3s cubic-bezier(0.4,0,0.2,1);
+}
+.skill-fill.amber { background:linear-gradient(90deg,#996600,var(--amber)); box-shadow:0 0 8px rgba(255,179,0,0.3); }
+.skill-fill.red { background:linear-gradient(90deg,#660022,var(--red)); box-shadow:0 0 8px rgba(255,51,85,0.3); }
+.skill-pct { font-size:0.72rem; color:var(--muted); text-align:right; }
+
+.soft-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; }
+.soft-item {
+  background:var(--bg2); border:1px solid var(--border); border-radius:4px;
+  padding:1rem; text-align:center; transition:all 0.2s;
+}
+.soft-item:hover { border-color:var(--green-dim); box-shadow:0 0 12px rgba(0,255,136,0.07); }
+.soft-icon { font-size:1.6rem; margin-bottom:0.4rem; }
+.soft-name { font-size:0.78rem; color:var(--text); }
+
+@media(max-width:600px){
+  .skill-row{grid-template-columns:100px 1fr 36px;}
+  .soft-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch">YK.exe</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="publications.html">PUBLICATIONS</a></li>
+    <li><a href="skills.html" class="active">SKILLS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-time" id="nav-clock">--:--:--</div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="container skills-section">
+
+      <div class="section-heading">
+        <h2 class="glow">SKILLS.SYS</h2>
+        <div class="sh-line"></div>
+        <span class="sh-tag">// proficiency matrix</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem">
+
+        <!-- Left col -->
+        <div>
+          <div class="skills-cat">
+            <div class="skills-cat-title">Programming Languages</div>
+            <div class="skill-row"><span class="skill-name">PHP</span><div class="skill-track"><div class="skill-fill" data-w="88%"></div></div><span class="skill-pct">88%</span></div>
+            <div class="skill-row"><span class="skill-name">JavaScript</span><div class="skill-track"><div class="skill-fill" data-w="82%"></div></div><span class="skill-pct">82%</span></div>
+            <div class="skill-row"><span class="skill-name">C#</span><div class="skill-track"><div class="skill-fill" data-w="78%"></div></div><span class="skill-pct">78%</span></div>
+            <div class="skill-row"><span class="skill-name">Python</span><div class="skill-track"><div class="skill-fill" data-w="76%"></div></div><span class="skill-pct">76%</span></div>
+            <div class="skill-row"><span class="skill-name">Dart</span><div class="skill-track"><div class="skill-fill" data-w="70%"></div></div><span class="skill-pct">70%</span></div>
+            <div class="skill-row"><span class="skill-name">Q# (Quantum)</span><div class="skill-track"><div class="skill-fill amber" data-w="42%"></div></div><span class="skill-pct">42%</span></div>
+          </div>
+
+          <div class="skills-cat">
+            <div class="skills-cat-title">Frameworks & Platforms</div>
+            <div class="skill-row"><span class="skill-name">Laravel</span><div class="skill-track"><div class="skill-fill" data-w="86%"></div></div><span class="skill-pct">86%</span></div>
+            <div class="skill-row"><span class="skill-name">ASP.NET MVC</span><div class="skill-track"><div class="skill-fill" data-w="74%"></div></div><span class="skill-pct">74%</span></div>
+            <div class="skill-row"><span class="skill-name">Flutter</span><div class="skill-track"><div class="skill-fill" data-w="70%"></div></div><span class="skill-pct">70%</span></div>
+            <div class="skill-row"><span class="skill-name">AngularJS</span><div class="skill-track"><div class="skill-fill" data-w="62%"></div></div><span class="skill-pct">62%</span></div>
+            <div class="skill-row"><span class="skill-name">WordPress</span><div class="skill-track"><div class="skill-fill" data-w="90%"></div></div><span class="skill-pct">90%</span></div>
+          </div>
+        </div>
+
+        <!-- Right col -->
+        <div>
+          <div class="skills-cat">
+            <div class="skills-cat-title">Databases & Cloud</div>
+            <div class="skill-row"><span class="skill-name">MySQL</span><div class="skill-track"><div class="skill-fill" data-w="88%"></div></div><span class="skill-pct">88%</span></div>
+            <div class="skill-row"><span class="skill-name">MSSQL</span><div class="skill-track"><div class="skill-fill" data-w="78%"></div></div><span class="skill-pct">78%</span></div>
+            <div class="skill-row"><span class="skill-name">Firebase</span><div class="skill-track"><div class="skill-fill" data-w="80%"></div></div><span class="skill-pct">80%</span></div>
+            <div class="skill-row"><span class="skill-name">MongoDB</span><div class="skill-track"><div class="skill-fill" data-w="68%"></div></div><span class="skill-pct">68%</span></div>
+            <div class="skill-row"><span class="skill-name">Google Cloud</span><div class="skill-track"><div class="skill-fill" data-w="62%"></div></div><span class="skill-pct">62%</span></div>
+          </div>
+
+          <div class="skills-cat">
+            <div class="skills-cat-title">DevOps & Specialised</div>
+            <div class="skill-row"><span class="skill-name">Git / GitHub</span><div class="skill-track"><div class="skill-fill" data-w="90%"></div></div><span class="skill-pct">90%</span></div>
+            <div class="skill-row"><span class="skill-name">CI/CD Pipelines</span><div class="skill-track"><div class="skill-fill" data-w="72%"></div></div><span class="skill-pct">72%</span></div>
+            <div class="skill-row"><span class="skill-name">ML / PyTorch</span><div class="skill-track"><div class="skill-fill" data-w="66%"></div></div><span class="skill-pct">66%</span></div>
+            <div class="skill-row"><span class="skill-name">OpenCV</span><div class="skill-track"><div class="skill-fill" data-w="64%"></div></div><span class="skill-pct">64%</span></div>
+            <div class="skill-row"><span class="skill-name">System Architecture</span><div class="skill-track"><div class="skill-fill" data-w="78%"></div></div><span class="skill-pct">78%</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Soft skills -->
+      <div style="margin-top:2rem">
+        <div class="section-heading" style="margin-bottom:1.4rem">
+          <h2 style="font-size:1.5rem;color:var(--amber);text-shadow:0 0 8px rgba(255,179,0,0.3)">PROFESSIONAL SKILLS</h2>
+          <div class="sh-line"></div>
+        </div>
+        <div class="soft-grid">
+          <div class="soft-item"><div class="soft-icon">[ED]</div><div class="soft-name">Curriculum Design</div></div>
+          <div class="soft-item"><div class="soft-icon">[LEC]</div><div class="soft-name">Student Mentoring</div></div>
+          <div class="soft-item"><div class="soft-icon">[ASM]</div><div class="soft-name">Assessment Design</div></div>
+          <div class="soft-item"><div class="soft-icon">[MIC]</div><div class="soft-name">Public Speaking</div></div>
+          <div class="soft-item"><div class="soft-icon">[AGI]</div><div class="soft-name">Agile / SCRUM</div></div>
+          <div class="soft-item"><div class="soft-icon">[RES]</div><div class="soft-name">Academic Research</div></div>
+          <div class="soft-item"><div class="soft-icon">[PSV]</div><div class="soft-name">Problem Solving</div></div>
+          <div class="soft-item"><div class="soft-icon">[WRT]</div><div class="soft-name">Technical Writing</div></div>
+          <div class="soft-item"><div class="soft-icon">[LDR]</div><div class="soft-name">Team Leadership</div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p><span style="color:var(--green)">YESEN KANDALAMA</span> &nbsp;·&nbsp; Software Engineer &amp; Lecturer</p>
+    <p>+94-704605516 &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea93818b848e8b868b878baa8d878b8386c4898587">[email&#160;protected]</a> &nbsp;·&nbsp; Gampaha, Sri Lanka</p>
+    <p style="margin-top:0.8rem;font-size:0.65rem">[ SYSTEM UPTIME: <span id="uptime">00:00:00</span> ] &nbsp; (c) 2025 Yesen Kandalama</p>
+  </div>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="main.js"></script>
+<script>
+// Trigger skill bar animation on this page
+document.addEventListener('DOMContentLoaded', () => {
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('

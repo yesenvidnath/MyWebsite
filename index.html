@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yesen Kandalama — Software Engineer & Lecturer</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.hero {
+  min-height: calc(100vh - 56px);
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 3rem 0;
+}
+.hero-bg-text {
+  position: absolute; right: -2rem; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'VT323', monospace;
+  font-size: clamp(8rem, 18vw, 16rem);
+  color: rgba(0,255,136,0.018);
+  white-space: nowrap; pointer-events: none;
+  user-select: none; letter-spacing: -0.05em;
+}
+.hero-pre { font-size: 0.78rem; color: var(--amber); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.8rem; }
+.hero-name {
+  font-family: 'VT323', monospace;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  line-height: 0.95; color: var(--green);
+  text-shadow: 0 0 30px rgba(0,255,136,0.4), 0 0 60px rgba(0,255,136,0.15);
+  letter-spacing: -0.02em; margin-bottom: 0.5rem;
+}
+.hero-roles { font-family: 'Share Tech Mono', monospace; font-size: clamp(0.9rem, 2vw, 1.2rem); color: var(--text); opacity: 0.8; margin-bottom: 1.5rem; min-height: 1.8em; }
+.hero-desc { font-size: 0.88rem; color: var(--text); opacity: 0.6; max-width: 520px; line-height: 1.85; margin-bottom: 2rem; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.hero-socials { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
+.hero-social-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 0.85rem; border: 1px solid var(--border);
+  color: var(--muted); text-decoration: none;
+  font-size: 0.7rem; letter-spacing: 0.1em; border-radius: 2px;
+  transition: all 0.2s;
+}
+.hero-social-btn:hover { border-color: var(--green-dim); color: var(--green); box-shadow: 0 0 10px rgba(0,255,136,0.1); }
+.hero-social-btn i { font-size: 0.8rem; }
+.hero-status { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.9rem; border: 1px solid rgba(0,255,136,0.2); border-radius: 20px; font-size: 0.72rem; color: var(--green-dim); margin-bottom: 2rem; }
+.status-blink { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: blink 1.5s infinite; }
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 4rem; }
+.stat-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 1.2rem; text-align: center; }
+.stat-box i { font-size: 1rem; color: var(--green-dim); margin-bottom: 0.5rem; display: block; }
+.stat-num { font-family: 'VT323', monospace; font-size: 2.6rem; color: var(--green); text-shadow: 0 0 15px var(--green-glow); display: block; line-height: 1; }
+.stat-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 0.3rem; text-transform: uppercase; }
+@media (max-width: 900px) { .hero-inner { flex-direction: column-reverse; gap: 2.5rem; } .hero-photo-wrap { max-width: 240px; } }
+@media (max-width: 768px) { .stats-row { grid-template-columns: repeat(2,1fr); } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch">YK.exe</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" class="active">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="publications.html">PUBLICATIONS</a></li>
+    <li><a href="skills.html">SKILLS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-time" id="nav-clock">--:--:--</div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="hero">
+        <div class="hero-bg-text">ENGINEER</div>
+
+        <div class="hero-inner" style="display:flex;align-items:center;gap:4rem;width:100%">
+
+          <!-- LEFT -->
+          <div style="flex:1;min-width:0">
+            <div class="hero-status">
+              <div class="status-blink"></div>
+              <span>AVAILABLE FOR COLLABORATION</span>
+            </div>
+            <div class="hero-pre"><i class="fa-solid fa-terminal" style="margin-right:0.4rem"></i>// software_engineer.init()</div>
+            <h1 class="hero-name">YESEN<br>KANDALAMA</h1>
+            <div class="hero-roles"><span id="typewriter"></span><span class="cursor">&#9608;</span></div>
+            <p class="hero-desc">
+              Software Engineer &middot; Full Stack Developer &middot; Lecturer &middot; Researcher.<br>
+              Building scalable systems, shaping future engineers, exploring Quantum Computing.<br>
+              First Class Honours &middot; London Metropolitan University.
+            </p>
+            <div class="hero-actions">
+              <a href="projects.html" class="btn"><span><i class="fa-solid fa-code-branch" style="margin-right:0.4rem"></i>PROJECTS</span></a>
+              <a href="publications.html" class="btn btn-amber"><span><i class="fa-solid fa-book-open" style="margin-right:0.4rem"></i>PUBLICATIONS</span></a>
+              <a href="contact.html" class="btn" style="border-color:var(--muted);color:var(--muted)"><span><i class="fa-solid fa-envelope" style="margin-right:0.4rem"></i>CONTACT</span></a>
+            </div>
+            <div class="hero-socials">
+              <a href="https://github.com/yesenvidnath" target="_blank" class="hero-social-btn"><i class="fa-brands fa-github"></i>GITHUB</a>
+              <a href="https://linkedin.com/in/yesenkandalama" target="_blank" class="hero-social-btn"><i class="fa-brands fa-linkedin"></i>LINKEDIN</a>
+              <a href="https://twitter.com/yesenkandalama" target="_blank" class="hero-social-btn"><i class="fa-brands fa-x-twitter"></i>TWITTER</a>
+              <a href="https://scholar.google.com/citations?user=bl2PBJUAAAAJ&hl=en" target="_blank" class="hero-social-btn"><i class="fa-solid fa-graduation-cap"></i>SCHOLAR</a>
+              <a href="mailto:ykandalama@gmail.com" class="hero-social-btn"><i class="fa-solid fa-envelope"></i>EMAIL</a>
+            </div>
+          </div>
+
+          <!-- RIGHT: Photo -->
+          <!-- RIGHT: Photo -->
+          <div class="hero-photo-wrap">
+            <div class="hero-photo-ring"></div>
+            <div class="hero-photo-frame" id="hero-frame">
+              <div class="hero-photo-corner-tr"></div>
+              <div class="hero-photo-corner-bl"></div>
+              <img
+                src="img/profile_image.jpeg"
+                alt="Yesen Kandalama"
+                class="hero-photo-img"
+              >
+              <div class="hero-photo-tint"></div>
+              <div class="hero-scan-line"></div>
+              <span class="hero-hud-label tl">ID:YK-001</span>
+              <span class="hero-hud-label tr" id="hud-time">--:--</span>
+              <span class="hero-hud-label bl">LK &middot; ENG</span>
+              <span class="hero-hud-label br" id="hud-status">LOCK-ON</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-box"><i class="fa-solid fa-users"></i><span class="stat-num" data-count="500">0</span><div class="stat-label">Students Taught</div></div>
+        <div class="stat-box"><i class="fa-solid fa-cubes"></i><span class="stat-num" data-count="20">0</span><div class="stat-label">Apps Shipped</div></div>
+        <div class="stat-box"><i class="fa-solid fa-calendar-days"></i><span class="stat-num" data-count="8">0</span><div class="stat-label">Years Exp.</div></div>
+        <div class="stat-box"><i class="fa-solid fa-file-lines"></i><span class="stat-num" data-count="1">0</span><div class="stat-label">Published</div></div>
+      </div>
+
+      <!-- Terminal -->
+      <div class="terminal" style="margin-top:3rem">
+        <div class="terminal-bar">
+
+          <span class="t-title">yesen@portfolio:~</span>
+        </div>
+        <div class="terminal-body">
+          <div class="prompt" style="margin-bottom:0.5rem">whoami</div>
+          <p style="color:var(--text);margin-bottom:1rem">Yesen K.K. Vidnath &mdash; Software Engineer &amp; Lecturer @ ESOFT Metrocampus, Gampaha</p>
+          <div class="prompt" style="margin-bottom:0.5rem">cat current_status.txt</div>
+          <p style="color:var(--text);margin-bottom:0.3rem"><i class="fa-solid fa-chevron-right" style="color:var(--green);margin-right:0.5rem;font-size:0.75rem"></i>Teaching 200+ students across Diploma &amp; HND programs</p>
+          <p style="color:var(--text);margin-bottom:0.3rem"><i class="fa-solid fa-chevron-right" style="color:var(--green);margin-right:0.5rem;font-size:0.75rem"></i>Pursuing Certificate in Quantum Computing &mdash; University of Colombo</p>
+          <p style="color:var(--text);margin-bottom:0.3rem"><i class="fa-solid fa-chevron-right" style="color:var(--green);margin-right:0.5rem;font-size:0.75rem"></i>IT Certified Master (Java, React, MongoDB) &mdash; ICET 2025</p>
+          <p style="color:var(--text);margin-bottom:1rem"><i class="fa-solid fa-chevron-right" style="color:var(--green);margin-right:0.5rem;font-size:0.75rem"></i>Research published at BIRC 2025 conference</p>
+          <div class="prompt" style="margin-bottom:0.5rem">ls skills/</div>
+          <p style="color:var(--green-dim)">C# &nbsp; PHP &nbsp; Python &nbsp; Dart &nbsp; JavaScript &nbsp; Q# &nbsp; Laravel &nbsp; Flutter &nbsp; ASP.NET &nbsp; MySQL &nbsp; Firebase &nbsp; ML &nbsp; Quantum</p>
+          <div style="margin-top:1rem;color:var(--muted);font-size:0.78rem"><i class="fa-solid fa-clock" style="margin-right:0.4rem"></i>Last login: <span id="last-login"></span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p style="margin-bottom:0.4rem"><span style="color:var(--green)">YESEN KANDALAMA</span> &nbsp;&middot;&nbsp; Software Engineer &amp; Lecturer</p>
+    <p>
+      <i class="fa-solid fa-phone" style="margin-right:0.3rem"></i>+94-704605516 &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-envelope" style="margin-right:0.3rem"></i>ykandalama@gmail.com &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-location-dot" style="margin-right:0.3rem"></i>Gampaha, Sri Lanka
+    </p>
+    <p style="margin-top:0.8rem;font-size:0.65rem"><i class="fa-solid fa-microchip" style="margin-right:0.3rem"></i>UPTIME: <span id="uptime">00:00:00</span> &nbsp;&middot;&nbsp; &copy; 2025 Yesen Kandalama</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+const roles = ['Full Stack Developer','Software Engineering Lecturer','Quantum Computing Enthusiast','Researcher & Mentor','System Architect'];
+let ri=0,ci=0,del=false;
+function typewrite(){
+  const el=document.getElementById('typewriter'),cur=roles[ri];
+  if(!del){el.textContent=cur.slice(0,++ci);if(ci===cur.length){del=true;setTimeout(typewrite,1800);return;}}
+  else{el.textContent=cur.slice(0,--ci);if(ci===0){del=false;ri=(ri+1)%roles.length;}}
+  setTimeout(typewrite,del?38:68);
+}
+typewrite();
+
+function updateHUD(){
+  const t=new Date(),h=String(t.getHours()).padStart(2,'0'),m=String(t.getMinutes()).padStart(2,'0');
+  const el=document.getElementById('hud-time');if(el)el.textContent=h+':'+m;
+  const st=document.getElementById('hud-status');if(st)st.style.opacity=t.getSeconds()%2===0?'1':'0.3';
+}
+setInterval(updateHUD,1000);updateHUD();
+
+function countUp(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=+el.dataset.count,suffix=target>=20?'+':'';
+    let count=0;const step=Math.ceil(target/60);
+    const t=setInterval(()=>{count=Math.min(count+step,target);el.textContent=count+suffix;if(count>=target)clearInterval(t);},22);
+  });
+}
+const so=new IntersectionObserver(e=>{if(e[0].isIntersecting){countUp();so.disconnect();}},{threshold:0.3});
+const sr=document.querySelector('.stats-row');if(sr)so.observe(sr);
+document.getElementById('last-login').textContent=new Date().toLocaleString();
+
+// Click-to-upload photo
+const frame=document.getElementById('hero-frame');
+frame.style.cursor='pointer';
+function swapPhoto(file){
+  if(!file||!file.type.startsWith('image/'))return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const ph=document.getElementById('photo-placeholder');
+    if(!ph)return;
+    const img=document.createElement('img');
+    img.src=ev.target.result;img.className='profile_image.jpeg';
+    ph.replaceWith(img);
+    document.querySelector('.photo-upload-hint').textContent='';
+  };
+  reader.readAsDataURL(file);
+}
+frame.addEventListener('click',()=>{const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=e=>swapPhoto(e.target.files[0]);i.click();});
+frame.addEventListener('dragover',e=>{e.preventDefault();frame.style.outline='1px solid var(--green)';});
+frame.addEventListener('dragleave',()=>frame.style.outline='');
+frame.addEventListener('drop',e=>{e.preventDefault();frame.style.outline='';swapPhoto(e.dataTransfer.files[0]);});
+</script>
+</body>
+</html>

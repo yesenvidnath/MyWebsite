@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experience — Yesen Kandalama</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.exp-tabs { display:flex; gap:0; margin-bottom:2rem; border-bottom:1px solid var(--border); overflow-x:auto; scrollbar-width:none; }
+.exp-tabs::-webkit-scrollbar { display:none; }
+.exp-tab {
+  padding:0.7rem 1.3rem; font-size:0.72rem; color:var(--muted);
+  cursor:pointer; letter-spacing:0.08em; border-bottom:2px solid transparent;
+  transition:all 0.2s; font-family:'Share Tech Mono',monospace; white-space:nowrap;
+  background:transparent; border-left:none; border-right:none; border-top:none;
+  display:flex; align-items:center; gap:0.4rem;
+}
+.exp-tab i { font-size:0.72rem; }
+.exp-tab:hover { color:var(--text); }
+.exp-tab.active { color:var(--green); border-bottom-color:var(--green); text-shadow:0 0 8px var(--green); }
+.exp-pane { display:none; }
+.exp-pane.active { display:block; animation:fadeUp 0.3s ease; }
+
+.job-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
+.job-title { font-family:'VT323',monospace; font-size:2rem; color:var(--green); line-height:1; }
+.job-company { font-size:0.88rem; color:var(--amber); margin-top:0.25rem; }
+.job-date { font-size:0.74rem; color:var(--muted); letter-spacing:0.1em; text-align:right; }
+
+.bullet-list { list-style:none; padding:0; }
+.bullet-list li { padding:0.5rem 0 0.5rem 1.6rem; position:relative; font-size:0.87rem; line-height:1.75; border-bottom:1px solid rgba(0,51,34,0.4); }
+.bullet-list li::before { content:'▸'; position:absolute; left:0; color:var(--green); }
+.bullet-list li:last-child { border-bottom:none; }
+
+.tech-used { margin-top:1.5rem; }
+.tech-label { font-size:0.67rem; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.6rem; }
+.tech-tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
+
+.metric-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2rem; }
+.metric { background:var(--bg2); border:1px solid var(--border); border-radius:4px; padding:1rem; text-align:center; }
+.metric i { color:var(--green-dim); font-size:0.9rem; display:block; margin-bottom:0.3rem; }
+.metric-val { font-family:'VT323',monospace; font-size:2rem; color:var(--amber); display:block; line-height:1; }
+.metric-label { font-size:0.62rem; color:var(--muted); letter-spacing:0.08em; margin-top:0.3rem; text-transform:uppercase; }
+
+.quote-block { border-left:3px solid var(--amber); padding:0.8rem 1.2rem; background:rgba(255,179,0,0.03); margin:1.2rem 0; font-size:0.88rem; line-height:1.8; color:var(--text); opacity:0.85; }
+
+.mini-timeline { position:relative; padding-left:1.6rem; margin-top:0.5rem; }
+.mini-timeline::before { content:''; position:absolute; left:0; top:4px; bottom:4px; width:1px; background:linear-gradient(180deg,var(--green),transparent); }
+.mt-item { position:relative; margin-bottom:1.6rem; }
+.mt-item::before { content:'◆'; position:absolute; left:-1.9rem; color:var(--green); font-size:0.6rem; text-shadow:0 0 6px var(--green); top:4px; }
+.mt-date { font-size:0.7rem; color:var(--amber); letter-spacing:0.1em; margin-bottom:0.15rem; }
+.mt-title { font-family:'VT323',monospace; font-size:1.3rem; color:var(--green); }
+.mt-body { font-size:0.84rem; color:var(--text); opacity:0.8; line-height:1.7; margin-top:0.25rem; }
+
+.cert-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.9rem; margin-top:0.5rem; }
+.cert-card { background:var(--bg2); border:1px solid var(--border); border-radius:4px; padding:1rem 1.1rem; transition:all 0.2s; position:relative; overflow:hidden; }
+.cert-card:hover { border-color:var(--green-dim); box-shadow:0 0 12px rgba(0,255,136,0.06); }
+.cert-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--green); border-radius:4px 0 0 4px; opacity:0; transition:opacity 0.2s; }
+.cert-card:hover::before { opacity:1; }
+.cert-icon { color:var(--amber); font-size:1rem; margin-bottom:0.4rem; }
+.cert-name { font-family:'VT323',monospace; font-size:1.15rem; color:var(--green); line-height:1.2; margin-bottom:0.2rem; }
+.cert-issuer { font-size:0.72rem; color:var(--muted); }
+.cert-year { font-size:0.66rem; color:var(--amber); margin-top:0.25rem; letter-spacing:0.08em; }
+
+@media(max-width:600px){ .metric-row{grid-template-columns:1fr 1fr;} .cert-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch">YK.exe</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html" class="active">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="publications.html">PUBLICATIONS</a></li>
+    <li><a href="skills.html">SKILLS</a></li>
+    <li><a href="contact.html">CONTACT</a></li>
+  </ul>
+  <div class="nav-time" id="nav-clock">--:--:--</div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <h2 class="glow">EXPERIENCE.LOG</h2>
+        <div class="sh-line"></div>
+        <span class="sh-tag">// 8+ years &middot; 6 roles</span>
+      </div>
+
+      <div class="exp-tabs">
+        <button class="exp-tab active" onclick="showTab('teaching',this)">
+          <i class="fa-solid fa-chalkboard-user"></i>TEACHING
+        </button>
+        <button class="exp-tab" onclick="showTab('dev',this)">
+          <i class="fa-solid fa-code"></i>DEVELOPMENT
+        </button>
+        <button class="exp-tab" onclick="showTab('webmaster',this)">
+          <i class="fa-solid fa-server"></i>WEBMASTER
+        </button>
+        <button class="exp-tab" onclick="showTab('research',this)">
+          <i class="fa-solid fa-microscope"></i>RESEARCH
+        </button>
+        <button class="exp-tab" onclick="showTab('speaking',this)">
+          <i class="fa-solid fa-microphone-lines"></i>SPEAKING
+        </button>
+        <button class="exp-tab" onclick="showTab('certs',this)">
+          <i class="fa-solid fa-certificate"></i>CERTIFICATIONS
+        </button>
+      </div>
+
+      <!-- ═══ TAB 1: TEACHING ═══ -->
+      <div class="exp-pane active" id="tab-teaching">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+            <span class="t-title">teaching_role.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="metric-row">
+              <div class="metric"><i class="fa-solid fa-users"></i><span class="metric-val">200+</span><div class="metric-label">Active Students</div></div>
+              <div class="metric"><i class="fa-solid fa-clock"></i><span class="metric-val">15+</span><div class="metric-label">Hrs / Week</div></div>
+              <div class="metric"><i class="fa-solid fa-circle-check"></i><span class="metric-val">92%</span><div class="metric-label">Project Completion</div></div>
+            </div>
+            <div class="job-header">
+              <div>
+                <div class="job-title">SOFTWARE ENGINEERING TUTOR</div>
+                <div class="job-company"><i class="fa-solid fa-building-columns" style="margin-right:0.4rem;font-size:0.8rem"></i>ESOFT Metro Campus, Gampaha</div>
+                <span class="tag" style="margin-top:0.4rem;display:inline-block">FULL TIME</span>
+              </div>
+              <div class="job-date">2025 — Present<br><span style="color:var(--green)"><i class="fa-solid fa-circle" style="font-size:0.45rem;vertical-align:middle;margin-right:0.3rem"></i>CURRENT</span></div>
+            </div>
+            <ul class="bullet-list">
+              <li>Teaching Diploma in Software Engineering and HND in Software Engineering programs with 200+ active students across multiple cohorts, delivering 15+ hours of instruction weekly.</li>
+              <li>Designed and delivered comprehensive curriculum modules covering C#, Python, PHP, database design (MySQL, MSSQL), enterprise application development, and software architecture patterns using project-based learning.</li>
+              <li>Conducted practical lab sessions on full-stack web development, SDLC, system design, and OOP principles — bridging theory with real industry practice.</li>
+              <li>Mentored students through capstone projects — providing code reviews, debugging sessions, and professional guidance — achieving a 92% project completion rate.</li>
+              <li>Developed assessment materials including assignments, practicals, and exam papers aligned with industry standards and educational outcomes.</li>
+              <li>Fostered active learning through interactive lectures, group problem-solving, and collaborative workshops on contemporary software engineering challenges.</li>
+            </ul>
+            <div class="tech-used">
+              <div class="tech-label"><i class="fa-solid fa-tags" style="margin-right:0.4rem"></i>Subjects &amp; Technologies</div>
+              <div class="tech-tags">
+                <span class="tag">C#</span><span class="tag">Python</span><span class="tag">PHP</span>
+                <span class="tag">MySQL</span><span class="tag">MSSQL</span><span class="tag">OOP</span>
+                <span class="tag">SDLC</span><span class="tag">System Design</span>
+                <span class="tag">Full Stack Dev</span><span class="tag">Curriculum Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 2: DEVELOPMENT ═══ -->
+      <div class="exp-pane" id="tab-dev">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+            <span class="t-title">dev_role.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="metric-row">
+              <div class="metric"><i class="fa-solid fa-cubes"></i><span class="metric-val">20+</span><div class="metric-label">Apps Shipped</div></div>
+              <div class="metric"><i class="fa-solid fa-calendar-days"></i><span class="metric-val">4</span><div class="metric-label">Years at Webstronomy</div></div>
+              <div class="metric"><i class="fa-solid fa-layer-group"></i><span class="metric-val">5+</span><div class="metric-label">Tech Stacks</div></div>
+            </div>
+            <div class="job-header">
+              <div>
+                <div class="job-title">FULL STACK WEB DEVELOPER</div>
+                <div class="job-company"><i class="fa-solid fa-building" style="margin-right:0.4rem;font-size:0.8rem"></i>Webstronomy</div>
+                <span class="tag" style="margin-top:0.4rem;display:inline-block">CONTRACT / REMOTE</span>
+              </div>
+              <div class="job-date">2021 — 2025</div>
+            </div>
+            <ul class="bullet-list">
+              <li>Architected and delivered 20+ production-grade applications spanning WordPress CMS, Laravel web apps, Flutter mobile solutions, Python APIs, and ASP.NET enterprise systems.</li>
+              <li>Implemented full-stack solutions using modern CI/CD pipelines, Agile SCRUM practices, and industry-standard design patterns.</li>
+              <li>Built scalable backend services and RESTful APIs with efficient database schemas supporting high-traffic production environments.</li>
+              <li>Integrated Firebase, Google Cloud services, and third-party APIs into mobile and web applications.</li>
+              <li>Managed technical documentation and code quality standards — directly informing real-world examples used in classroom instruction.</li>
+              <li>Collaborated cross-functionally in sprint planning, daily stand-ups, and peer code review cycles.</li>
+            </ul>
+            <div class="tech-used">
+              <div class="tech-label"><i class="fa-solid fa-tags" style="margin-right:0.4rem"></i>Technologies Used</div>
+              <div class="tech-tags">
+                <span class="tag">C#</span><span class="tag">PHP</span><span class="tag">Python</span>
+                <span class="tag">Dart</span><span class="tag">Laravel</span><span class="tag">ASP.NET MVC</span>
+                <span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Google Cloud</span>
+                <span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">REST APIs</span>
+                <span class="tag">CI/CD</span><span class="tag">Git</span><span class="tag">Agile SCRUM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 3: WEBMASTER ═══ -->
+      <div class="exp-pane" id="tab-webmaster">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+            <span class="t-title">webmaster_role.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="metric-row">
+              <div class="metric"><i class="fa-solid fa-globe"></i><span class="metric-val">25+</span><div class="metric-label">Client Sites</div></div>
+              <div class="metric"><i class="fa-solid fa-calendar-days"></i><span class="metric-val">2</span><div class="metric-label">Years</div></div>
+              <div class="metric"><i class="fa-solid fa-server"></i><span class="metric-val">100%</span><div class="metric-label">Uptime Target</div></div>
+            </div>
+            <div class="job-header">
+              <div>
+                <div class="job-title">WEBMASTER &amp; MAINTENANCE</div>
+                <div class="job-company"><i class="fa-solid fa-building" style="margin-right:0.4rem;font-size:0.8rem"></i>EKWA Marketing</div>
+                <span class="tag" style="margin-top:0.4rem;display:inline-block">CONTRACT</span>
+              </div>
+              <div class="job-date">2019 — 2021</div>
+            </div>
+            <ul class="bullet-list">
+              <li>Maintained and optimised 25+ client websites, implementing web application best practices and system administration techniques at scale.</li>
+              <li>Developed custom WordPress solutions with advanced PHP backend development and database management.</li>
+              <li>Managed cPanel server configurations, DNS settings, SSL certificates, and hosting environments for the full client portfolio.</li>
+              <li>Implemented performance optimisation strategies — reducing page load times and improving Core Web Vitals scores across client sites.</li>
+              <li>Developed and documented standard maintenance procedures adopted across the team as standard operating practice.</li>
+              <li>Liaised directly with clients to gather requirements, report progress, and deliver updates on schedule.</li>
+            </ul>
+            <div class="tech-used">
+              <div class="tech-label"><i class="fa-solid fa-tags" style="margin-right:0.4rem"></i>Technologies Used</div>
+              <div class="tech-tags">
+                <span class="tag">PHP</span><span class="tag">WordPress</span><span class="tag">MySQL</span>
+                <span class="tag">cPanel</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span>
+                <span class="tag">SEO</span><span class="tag">DNS</span><span class="tag">SSL</span><span class="tag">Server Admin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 4: RESEARCH ═══ -->
+      <div class="exp-pane" id="tab-research">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+            <span class="t-title">research_activity.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="metric-row">
+              <div class="metric"><i class="fa-solid fa-file-lines"></i><span class="metric-val">1</span><div class="metric-label">Published Paper</div></div>
+              <div class="metric"><i class="fa-solid fa-users-between-lines"></i><span class="metric-val">BIRC</span><div class="metric-label">Conference 2025</div></div>
+              <div class="metric"><i class="fa-solid fa-atom"></i><span class="metric-val">2</span><div class="metric-label">Active Areas</div></div>
+            </div>
+            <div class="job-header">
+              <div>
+                <div class="job-title">RESEARCHER &amp; AUTHOR</div>
+                <div class="job-company"><i class="fa-solid fa-users" style="margin-right:0.4rem;font-size:0.8rem"></i>Business &amp; IT Research Conference (BIRC 2025)</div>
+                <span class="tag" style="margin-top:0.4rem;display:inline-block;border-color:var(--amber);color:var(--amber)">CONFERENCE PAPER</span>
+              </div>
+              <div class="job-date">2025</div>
+            </div>
+            <div class="quote-block">
+              "The Impact of Artificial Intelligence in Private Sector Education"
+              <div style="margin-top:0.5rem;font-size:0.78rem;color:var(--muted)">
+                <i class="fa-solid fa-graduation-cap" style="margin-right:0.3rem"></i>
+                BIRC 2025, Sri Lanka &nbsp;&middot;&nbsp;
+                <a href="https://scholar.google.com/citations?user=bl2PBJUAAAAJ&hl=en" target="_blank" style="color:var(--amber);text-decoration:none">Google Scholar Profile</a>
+              </div>
+            </div>
+            <ul class="bullet-list">
+              <li>Authored and presented research examining AI tool adoption within Sri Lanka's private tertiary education sector — investigating pedagogical shifts, student outcome impacts, and institutional change.</li>
+              <li>Conducted empirical data collection and qualitative analysis across private higher education institutions in Sri Lanka.</li>
+              <li>Presented findings to academics, industry professionals, and policymakers at BIRC 2025.</li>
+              <li>Research contributes to the growing body of literature on AI integration in developing-world educational contexts.</li>
+            </ul>
+            <div style="margin-top:2rem">
+              <div class="tech-label" style="margin-bottom:1rem"><i class="fa-solid fa-flask" style="margin-right:0.4rem"></i>Ongoing Research</div>
+              <div class="mini-timeline">
+                <div class="mt-item">
+                  <div class="mt-date">2025 — ONGOING</div>
+                  <div class="mt-title">Quantum Computing in SE Education</div>
+                  <div class="mt-body">Exploring frameworks for introducing Q# and quantum programming into undergraduate software engineering curricula, affiliated with University of Colombo Quantum Computing programme.</div>
+                </div>
+                <div class="mt-item">
+                  <div class="mt-date">2025 — ONGOING</div>
+                  <div class="mt-title">AI-Assisted Learning Tools</div>
+                  <div class="mt-body">Investigating design and effectiveness of AI-powered tools for personalised learning in Sri Lankan private sector institutions — building on BIRC 2025 findings.</div>
+                </div>
+              </div>
+            </div>
+            <div class="tech-used">
+              <div class="tech-label"><i class="fa-solid fa-tags" style="margin-right:0.4rem"></i>Research Areas</div>
+              <div class="tech-tags">
+                <span class="tag">AI in Education</span><span class="tag">EdTech</span>
+                <span class="tag">Quantum Computing</span><span class="tag">ML</span>
+                <span class="tag">Software Architecture</span><span class="tag">Emerging Tech</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 5: SPEAKING ═══ -->
+      <div class="exp-pane" id="tab-speaking">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+            <span class="t-title">speaking_leadership.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="metric-row">
+              <div class="metric"><i class="fa-solid fa-microphone"></i><span class="metric-val">30+</span><div class="metric-label">Speeches</div></div>
+              <div class="metric"><i class="fa-solid fa-users"></i><span class="metric-val">200+</span><div class="metric-label">TEDx Audience</div></div>
+              <div class="metric"><i class="fa-solid fa-award"></i><span class="metric-val">2</span><div class="metric-label">Speaking Orgs</div></div>
+            </div>
+
+            <!-- TEDx -->
+            <div class="job-header">
+              <div>
+                <div class="job-title">TEDX YOUTH SPEAKER</div>
+                <div class="job-company"><i class="fa-solid fa-location-dot" style="margin-right:0.4rem;font-size:0.8rem"></i>TEDx Youth, Kandy</div>
+                <span class="tag" style="margin-top:0.4rem;display:inline-block;border-color:var(--red);color:var(--red)">KEYNOTE SPEAKER</span>
+              </div>
+              <div class="job-date">2022</div>
+            </div>
+            <div class="quote-block">
+              Delivered a keynote talk on <strong style="color:var(--amber)">"Personal Growth and Self-Improvement"</strong> to 200+ youth attendees. Drew from a non-linear journey into technology to inspire resilience, growth mindset, and the courage to bet on yourself.
+            </div>
+            <ul class="bullet-list">
+              <li>Prepared and delivered an original, independently researched talk to an audience of 200+ at TEDx Youth Kandy 2022.</li>
+              <li>Collaborated with event organisers on stage presentation, timing, and visual design to meet TEDx production standards.</li>
+              <li>Talk centred on overcoming adversity, redefining success, and building a meaningful career through self-driven learning.</li>
+            </ul>
+
+            <!-- Toastmasters -->
+            <div style="margin-top:2rem">
+              <div class="job-header" style="margin-top:0">
+                <div>
+                  <div class="job-title">TOASTMASTERS MEMBER</div>
+                  <div class="job-company"><i class="fa-solid fa-comments" style="margin-right:0.4rem;font-size:0.8rem"></i>Syane Toastmasters Club</div>
+                  <span class="tag" style="margin-top:0.4rem;display:inline-block">MEMBER &amp; MENTOR</span>
+                </div>
+                <div class="job-date">Until 2022</div>
+              </div>
+              <ul class="bullet-list">
+                <li>Completed 30+ prepared speeches across communication and leadership projects within the Toastmasters Pathways programme.</li>
+                <li>Served in mentorship roles supporting newer members with speech preparation, feedback delivery, and stage confidence.</li>
+                <li>Held meeting roles including Table Topics Master, General Evaluator, and Toastmaster of the Evening.</li>
+                <li>Developed advanced public speaking, impromptu speaking, structured argumentation, and active listening skills.</li>
+              </ul>
+            </div>
+
+            <div class="tech-used">
+              <div class="tech-label"><i class="fa-solid fa-tags" style="margin-right:0.4rem"></i>Skills Developed</div>
+              <div class="tech-tags">
+                <span class="tag">Public Speaking</span><span class="tag">Leadership</span>
+                <span class="tag">Mentoring</span><span class="tag">Storytelling</span>
+                <span class="tag">Impromptu Speaking</span><span class="tag">Feedback Delivery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 6: CERTIFICATIONS ═══ -->
+      <div class="exp-pane" id="tab-certs">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+            <span class="t-title">certifications.log</span>
+          </div>
+          <div class="terminal-body">
+            <div class="metric-row">
+              <div class="metric"><i class="fa-solid fa-certificate"></i><span class="metric-val">4+</span><div class="metric-label">Certifications</div></div>
+              <div class="metric"><i class="fa-solid fa-graduation-cap"></i><span class="metric-val">3</span><div class="metric-label">Degrees / HNDs</div></div>
+              <div class="metric"><i class="fa-solid fa-book-open"></i><span class="metric-val">2</span><div class="metric-label">In Progress</div></div>
+            </div>
+
+            <div class="tech-label" style="margin-bottom:1rem"><i class="fa-solid fa-graduation-cap" style="margin-right:0.4rem"></i>Education Timeline</div>
+            <div class="mini-timeline" style="margin-bottom:2rem">
+              <div class="mt-item">
+                <div class="mt-date">2024 — 2025</div>
+                <div class="mt-title">B.Eng (Hons) Software Engineering</div>
+                <div class="mt-body">London Metropolitan University &mdash; <span style="color:var(--amber)">First Class Honours</span></div>
+              </div>
+              <div class="mt-item">
+                <div class="mt-date">2022 — 2024</div>
+                <div class="mt-title">HND Computing Software Engineering</div>
+                <div class="mt-body">ESOFT Metro Campus &mdash; <span style="color:var(--green)">Merit</span></div>
+              </div>
+              <div class="mt-item">
+                <div class="mt-date">2026 — Ongoing</div>
+                <div class="mt-title">Certificate in Quantum Computing</div>
+                <div class="mt-body">University of Colombo, Dept. of Mathematics &mdash; <span style="color:var(--amber)">In Progress</span></div>
+              </div>
+            </div>
+
+            <div class="tech-label" style="margin-bottom:1rem"><i class="fa-solid fa-certificate" style="margin-right:0.4rem"></i>Professional Certifications</div>
+            <div class="cert-grid">
+              <div class="cert-card">
+                <div class="cert-icon"><i class="fa-solid fa-trophy"></i></div>
+                <div class="cert-name">IT Certified Master</div>
+                <div class="cert-issuer">Institute of Computer Engineering Technology (ICET)</div>
+                <div class="cert-year"><i class="fa-solid fa-tags" style="margin-right:0.3rem"></i>Java &middot; React &middot; MongoDB &middot; 2025</div>
+              </div>
+              <div class="cert-card">
+                <div class="cert-icon"><i class="fa-solid fa-atom"></i></div>
+                <div class="cert-name">Quantum Computing (Q#)</div>
+                <div class="cert-issuer">Microsoft Learning &amp; MIT Lectures</div>
+                <div class="cert-year"><i class="fa-solid fa-calendar" style="margin-right:0.3rem"></i>2025, Ongoing</div>
+              </div>
+              <div class="cert-card">
+                <div class="cert-icon"><i class="fa-brands fa-google"></i></div>
+                <div class="cert-name">Google Data Analytics</div>
+                <div class="cert-issuer">Coursera / Google</div>
+                <div class="cert-year"><i class="fa-solid fa-calendar" style="margin-right:0.3rem"></i>2024</div>
+              </div>
+              <div class="cert-card">
+                <div class="cert-icon"><i class="fa-solid fa-microphone"></i></div>
+                <div class="cert-name">TEDx Youth Speaker</div>
+                <div class="cert-issuer">TEDx Youth Kandy</div>
+                <div class="cert-year"><i class="fa-solid fa-calendar" style="margin-right:0.3rem"></i>2022</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p style="margin-bottom:0.4rem"><span style="color:var(--green)">YESEN KANDALAMA</span> &nbsp;&middot;&nbsp; Software Engineer &amp; Lecturer</p>
+    <p>
+      <i class="fa-solid fa-phone" style="margin-right:0.3rem"></i>+94-704605516 &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-envelope" style="margin-right:0.3rem"></i>ykandalama@gmail.com &nbsp;&middot;&nbsp;
+      <i class="fa-solid fa-location-dot" style="margin-right:0.3rem"></i>Gampaha, Sri Lanka
+    </p>
+    <p style="margin-top:0.8rem;font-size:0.65rem"><i class="fa-solid fa-microchip" style="margin-right:0.3rem"></i>UPTIME: <span id="uptime">00:00:00</span> &nbsp;&middot;&nbsp; &copy; 2025 Yesen Kandalama</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.exp-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.exp-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

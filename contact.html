@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Yesen Kandalama</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+.contact-info-item { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.6rem; }
+.ci-icon { font-size:1.3rem; margin-top:0.1rem; min-width:1.8rem; }
+.ci-label { font-size:0.65rem; color:var(--muted); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.2rem; }
+.ci-value { font-size:0.92rem; color:var(--text); }
+.ci-value a { color:var(--green); text-decoration:none; }
+.ci-value a:hover { text-shadow:0 0 8px var(--green); }
+
+.form-group { margin-bottom:1.3rem; }
+.form-label { display:block; font-size:0.75rem; color:var(--muted); letter-spacing:0.12em; margin-bottom:0.4rem; }
+.form-label::before { content:'> '; color:var(--amber); }
+.form-input, .form-textarea {
+  width:100%; background:var(--bg); border:1px solid var(--border); border-radius:3px;
+  color:var(--green); font-family:'Share Tech Mono',monospace; font-size:0.9rem;
+  padding:0.75rem 1rem; outline:none; transition:border-color 0.2s, box-shadow 0.2s; resize:none;
+}
+.form-input:focus, .form-textarea:focus {
+  border-color:var(--green-dim); box-shadow:0 0 12px rgba(0,255,136,0.1); caret-color:var(--green);
+}
+.form-input::placeholder, .form-textarea::placeholder { color:var(--muted); }
+.form-status { margin-top:0.8rem; font-size:0.8rem; min-height:1.2rem; }
+.form-status.success { color:var(--green); }
+.form-status.error { color:var(--red); }
+
+.social-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:2rem; }
+.social-tile {
+  background:var(--bg2); border:1px solid var(--border); border-radius:4px;
+  padding:0.9rem 1rem; text-decoration:none; display:flex; align-items:center; gap:0.7rem;
+  transition:all 0.2s;
+}
+.social-tile:hover { border-color:var(--green-dim); box-shadow:0 0 12px rgba(0,255,136,0.07); }
+.social-tile-icon { font-size:1.2rem; }
+.social-tile-name { font-size:0.78rem; color:var(--text); }
+.social-tile-handle { font-size:0.68rem; color:var(--muted); }
+
+@media(max-width:768px){ .contact-grid{grid-template-columns:1fr;} .social-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo glitch">YK.exe</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="about.html">ABOUT</a></li>
+    <li><a href="experience.html">EXPERIENCE</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="publications.html">PUBLICATIONS</a></li>
+    <li><a href="skills.html">SKILLS</a></li>
+    <li><a href="contact.html" class="active">CONTACT</a></li>
+  </ul>
+  <div class="nav-time" id="nav-clock">--:--:--</div>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <h2 class="glow">CONTACT.SH</h2>
+        <div class="sh-line"></div>
+        <span class="sh-tag">// open connection</span>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div>
+          <div class="terminal" style="margin-bottom:2rem">
+            <div class="terminal-bar">
+
+              <span class="t-title">contact_info.json</span>
+            </div>
+            <div class="terminal-body">
+              <div class="prompt" style="margin-bottom:1rem">cat contact.json</div>
+
+              <div class="contact-info-item">
+                <div class="ci-icon">[TEL]</div>
+                <div>
+                  <div class="ci-label">Phone</div>
+                  <div class="ci-value"><a href="tel:+94704605516">+94-704605516</a></div>
+                </div>
+              </div>
+
+              <div class="contact-info-item">
+                <div class="ci-icon">[ML]</div>
+                <div>
+                  <div class="ci-label">Email</div>
+                  <div class="ci-value"><a href="/cdn-cgi/l/email-protection#68110309060c0904090509280f05090104460b0705"><span class="__cf_email__" data-cfemail="047d6f656a606568656965446369656d682a676b69">[email&#160;protected]</span></a></div>
+                </div>
+              </div>
+
+              <div class="contact-info-item">
+                <div class="ci-icon">[LOC]</div>
+                <div>
+                  <div class="ci-label">Location</div>
+                  <div class="ci-value">Gampaha, Sri Lanka </div>
+                </div>
+              </div>
+
+              <div class="contact-info-item">
+                <div class="ci-icon">[EDU]</div>
+                <div>
+                  <div class="ci-label">Workplace</div>
+                  <div class="ci-value">ESOFT Metro Campus, Gampaha</div>
+                </div>
+              </div>
+
+              <div style="margin-top:1rem;padding:0.8rem;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.1);border-radius:3px;font-size:0.8rem">
+                <span style="color:var(--green)"><i class="fa-solid fa-circle" style="font-size:0.5rem;vertical-align:middle"></i> AVAILABLE</span> — Open to consulting, collaboration, research partnerships and speaking engagements.
+              </div>
+            </div>
+          </div>
+
+          <!-- Social links -->
+          <div>
+            <div style="font-size:0.68rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.8rem">// find me online</div>
+            <div class="social-grid">
+              <a href="https://linkedin.com/in/yesenkandalama" target="_blank" class="social-tile">
+                <div class="social-tile-icon">[LI]</div>
+                <div><div class="social-tile-name" style="color:var(--green)">LinkedIn</div><div class="social-tile-handle">yesenkandalama</div></div>
+              </a>
+              <a href="https://github.com/yesenvidnath" target="_blank" class="social-tile">
+                <div class="social-tile-icon">[GH]</div>
+                <div><div class="social-tile-name" style="color:var(--green)">GitHub</div><div class="social-tile-handle">yesenvidnath</div></div>
+              </a>
+              <a href="https://twitter.com/yesenkandalama" target="_blank" class="social-tile">
+                <div class="social-tile-icon">[TW]</div>
+                <div><div class="social-tile-name" style="color:var(--green)">Twitter</div><div class="social-tile-handle">yesenkandalama</div></div>
+              </a>
+              <a href="https://instagram.com/yesenkandalama" target="_blank" class="social-tile">
+                <div class="social-tile-icon">[IG]</div>
+                <div><div class="social-tile-name" style="color:var(--green)">Instagram</div><div class="social-tile-handle">yesenkandalama</div></div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <div class="terminal">
+            <div class="terminal-bar">
+
+              <span class="t-title">send_message.sh</span>
+            </div>
+            <div class="terminal-body">
+              <div class="prompt" style="margin-bottom:1.2rem">./send_message --interactive</div>
+
+              <div class="form-group">
+                <label class="form-label">YOUR NAME</label>
+                <input class="form-input" type="text" placeholder="John Doe" id="f-name">
+              </div>
+              <div class="form-group">
+                <label class="form-label">YOUR EMAIL</label>
+                <input class="form-input" type="email" placeholder="you@example.com" id="f-email">
+              </div>
+              <div class="form-group">
+                <label class="form-label">SUBJECT</label>
+                <input class="form-input" type="text" placeholder="Collaboration / Consulting / Other" id="f-subject">
+              </div>
+              <div class="form-group">
+                <label class="form-label">MESSAGE</label>
+                <textarea class="form-textarea" rows="5" placeholder="Your message here..." id="f-msg"></textarea>
+              </div>
+
+              <button class="btn" onclick="submitForm()" style="width:100%;justify-content:center">
+                <span>▸ SEND MESSAGE</span>
+              </button>
+              <div class="form-status" id="f-status"></div>
+
+              <div style="margin-top:1.2rem;font-size:0.72rem;color:var(--muted)">
+                // Note: This form opens your default mail client.<br>
+                // Or email directly: <a href="/cdn-cgi/l/email-protection#176e7c767973767b767a7657707a767e7b3974787a" style="color:var(--green)"><span class="__cf_email__" data-cfemail="fa83919b949e9b969b979bba9d979b9396d4999597">[email&#160;protected]</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p><span style="color:var(--green)">YESEN KANDALAMA</span> &nbsp;·&nbsp; Software Engineer &amp; Lecturer</p>
+    <p>+94-704605516 &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f58c9e949b919499949894b59298949c99db969a98">[email&#160;protected]</a> &nbsp;·&nbsp; Gampaha, Sri Lanka</p>
+    <p style="margin-top:0.8rem;font-size:0.65rem">[ SYSTEM UPTIME: <span id="uptime">00:00:00</span> ] &nbsp; (c) 2025 Yesen Kandalama</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="main.js"></script>
+<script>
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const subject = document.getElementById('f-subject').value.trim();
+  const msg = document.getElementById('f-msg').value.trim();
+  const status = document.getElementById('f-status');
+
+  if (!name || !email 
